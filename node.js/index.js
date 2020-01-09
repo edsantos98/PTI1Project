@@ -561,7 +561,7 @@ app.get("/data/:id", (req, res) => {
           traffic = 2;
         }
 
-        typesQuery(myJson, traffic, localityId, authLocalityId, typeId);
+        typesQuery(myJson, c, localityId, authLocalityId, typeId);
       });
     }
 
