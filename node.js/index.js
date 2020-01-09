@@ -373,7 +373,7 @@ app.get("/traffic/:segments", (req, res) => {
             });
           });
         }
-      })
+      });
 
       routeQuery = (localityId) => {
         //console.log("LOCALITY RESULT " + localityId);
@@ -402,7 +402,7 @@ app.get("/traffic/:segments", (req, res) => {
               });
             });
           }
-        })
+        });
       }
 
       getTraffic = (routeId) => {
@@ -410,7 +410,7 @@ app.get("/traffic/:segments", (req, res) => {
         
         //console.log("COUTNER " + counter + " | LIMIT " + speedLimit[counter] + " | TOTAL " + total);
 
-        if (counter < total - 1) {
+        if (routeId != null) {
           routeIds[counter] = routeId;
 
           let nearbyQuery = "select count(*) as count from User "
@@ -441,7 +441,7 @@ app.get("/traffic/:segments", (req, res) => {
 
             //console.log("c = " + c + ", traffic = " + traffic);
             
-            if (counter < total - 1) {
+            if (counter < total) {
               counter ++;
               geocoder();
             }
