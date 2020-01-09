@@ -34,16 +34,20 @@ var mCounter = {
 };
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "lti",
-  database: "WebPTI"
+  host: "34.89.43.64",
+  user: "pti",
+  password: "wesuck",
+  database: "Maps"
 });
 
 
 db.connect(err => {
   if (err) throw err;
   console.log("Connected to MySQL");
+  /*let query = "select * from Locality";
+  db.query(query, (err, result) => {
+    console.log(result);
+  });*/
 });
 
 app.get("/", (req, res) => {
@@ -979,6 +983,6 @@ app.post("/signup", (req, res) => {
   });  
 });
 
-app.listen("8000", () => {
+app.listen(8000, () => {
   console.log("Listening on 8000");
 });
