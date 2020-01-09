@@ -583,7 +583,7 @@ app.get("/data/:id", (req, res) => {
       localityName
     } = myJson;
 
-    let selectOut = "select U.id, U.name, U.typeId, U.latitude, U.longitude, U.speed, U.speedLimit, U.status, U.sos"
+    let selectOut = "select U.id, U.name, U.typeId, U.latitude, U.longitude, U.speed, U.bearing, U.speedLimit, U.status, U.sos"
 
     //console.log("switching " + typeId);
 
@@ -609,6 +609,7 @@ app.get("/data/:id", (req, res) => {
               latitude: nResult.latitude,
               longitude: nResult.longitude,
               speed: nResult.speed,
+              bearing: nResult.bearing,
               speedLimit: nResult.speedLimit,
               status: nResult.status,
               sos: nResult.sos
@@ -658,6 +659,7 @@ app.get("/data/:id", (req, res) => {
               latitude: nResult.latitude,
               longitude: nResult.longitude,
               speed: nResult.speed,
+              bearing: nResult.bearing,
               speedLimit: nResult.speedLimit,
               status: nResult.status,
               sos: nResult.sos
@@ -703,6 +705,7 @@ app.get("/data/:id", (req, res) => {
               latitude: nResult.latitude,
               longitude: nResult.longitude,
               speed: nResult.speed,
+              bearing: nResult.bearing,
               speedLimit: nResult.speedLimit,
               status: nResult.status,
               sos: nResult.sos
@@ -749,6 +752,7 @@ app.get("/data/:id", (req, res) => {
               latitude: nResult.latitude,
               longitude: nResult.longitude,
               speed: nResult.speed,
+              bearing: nResult.bearing,
               speedLimit: nResult.speedLimit,
               status: nResult.status,
               sos: nResult.sos
@@ -797,6 +801,7 @@ app.get("/data/:id", (req, res) => {
               latitude: nResult.latitude,
               longitude: nResult.longitude,
               speed: nResult.speed,
+              bearing: nResult.bearing,
               speedLimit: nResult.speedLimit,
               status: nResult.status,
               sos: nResult.sos
@@ -848,6 +853,7 @@ app.get("/data/:id", (req, res) => {
               latitude: nResult.latitude,
               longitude: nResult.longitude,
               speed: nResult.speed,
+              bearing: nResult.bearing,
               speedLimit: nResult.speedLimit,
               status: nResult.status,
               sos: nResult.sos
@@ -896,6 +902,7 @@ app.get("/data/:id", (req, res) => {
               latitude: nResult.latitude,
               longitude: nResult.longitude,
               speed: nResult.speed,
+              bearing: nResult.bearing,
               speedLimit: nResult.speedLimit,
               status: nResult.status,
               sos: nResult.sos
