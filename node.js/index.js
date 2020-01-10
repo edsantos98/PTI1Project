@@ -84,8 +84,8 @@ app.get("/login/:email/:password", (req, res) => {
   })
 })
 
-app.put("/addData", (req, res) => {  
-  let id = req.body.id;
+app.put("/data/:id", (req, res) => {  
+  let id = parseInt(req.params.id);
   let latitude = req.body.latitude;
   let longitude = req.body.longitude;
   let altitude = req.body.altitude;
@@ -173,13 +173,13 @@ app.put("/addData", (req, res) => {
   }     
 });
 
-app.put("/sos", (req, res) => {
-  let id = req.body.id;
+app.put("/sos/:id", (req, res) => {
+  let id = parseInt(req.params.id);
   let sos = req.body.sos;
 
   let query = "update User SET sos = " + sos + " where id = " + id;
 
-  console.log("PUT/sos received -> setting " + id + "'s SOS to " + sos);
+  console.log("PUT/sos/" + id + " received -> setting SOS to " + sos);
     
   db.query(query, (err, result) => {
     if (err) {
@@ -192,13 +192,13 @@ app.put("/sos", (req, res) => {
   })
 });
 
-app.put("/status", (req, res) => {
-  let id = req.body.id;
+app.put("/status/:id", (req, res) => {
+  let id = parseInt(req.params.id);
   let status = req.body.status;
 
   let query = "update User SET status = " + status + " where id = " + id;
 
-  console.log("PUT/status received -> setting " + id + "'s status to " + status);
+  console.log("PUT/status/" + id + " received -> setting status to " + status);
     
   db.query(query, (err, result) => {
     if (err) {
@@ -209,7 +209,7 @@ app.put("/status", (req, res) => {
   })
 });
 
-app.get("/userList/:id", (req, res) => {
+app.get("/users/:id", (req, res) => {
   let id = parseInt(req.params.id);
 
   let authQuery = "select U.authLocalityId from User U where U.id = " + id;
@@ -222,19 +222,19 @@ app.get("/userList/:id", (req, res) => {
         users: result2
       }
 
-      console.log("GET/userList/" + id + " received -> responding " + JSON.stringify(userList));
+      console.log("GET/users/" + id + " received -> responding " + JSON.stringify(userList));
       
       res.send(JSON.stringify(userList));
     });
   });  
 });
 
-app.put("/changeType", (req, res) => {
-  let id = req.body.id;
+app.put("/type/:id", (req, res) => {
+  let id = parseInt(req.params.id);
   let typeId = req.body.typeId;
 
   let updateQuery = "update User SET typeId = " + typeId + ", status = 0 where id = " + id;
-  console.log("PUT/changeType received -> changing " + id + "'s type to " + typeId);
+  console.log("PUT/types/" + id + " received -> changing type to " + typeId);
 
   db.query(updateQuery, (err, result2) => {
     if (err) {
