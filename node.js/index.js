@@ -948,7 +948,7 @@ app.post("/signup", (req, res) => {
 
   console.log("POST/signup receiving -> " + email + ", " + password + ", " + name + ", " + locality);
 
-  fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude[counter] + "," + longitude[counter] + "&key=AIzaSyADYWIGFSnn3DHlJblK0hntz5KQiwbD0hk")
+  fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + locality + "&key=AIzaSyADYWIGFSnn3DHlJblK0hntz5KQiwbD0hk")
     .then(response => response.json()).then(json => {
     let latitude = json.results[0].geometry.location.lat;
     let longitude = json.results[0].geometry.location.lng;
