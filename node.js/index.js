@@ -229,7 +229,7 @@ app.get("/users/:id", (req, res) => {
   });  
 });
 
-app.put("/type/:id", (req, res) => {
+app.put("/types/:id", (req, res) => {
   let id = parseInt(req.params.id);
   let typeId = req.body.typeId;
 
