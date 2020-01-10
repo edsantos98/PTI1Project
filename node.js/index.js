@@ -419,7 +419,13 @@ app.get("/traffic/:segments", (req, res) => {
           //console.log("NEARBY QUERY " + nearbyQuery);
 
           db.query(nearbyQuery, (err, result) => {
-            let c = parseInt(result[0].count);
+            let c;
+
+            if (result.length == 0) {
+              c = 0;
+            }
+
+            c = parseInt(result[0].count);
   
             //console.log("NEARBY RESULT " + result[0].count);
 
