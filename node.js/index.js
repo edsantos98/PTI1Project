@@ -849,6 +849,8 @@ app.get("/data/:id", (req, res) => {
           + " and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
           + " and R.id = U.routeId and R.localityId = " + authLocalityId + ") and U.id != " + id;
 
+        console.log("QUERY = " + selectVehicles);
+
         db.query(selectVehicles, (err, result) => {
           //console.log("selectTypes:")
           //console.log(result);
