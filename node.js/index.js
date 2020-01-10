@@ -845,8 +845,7 @@ app.get("/data/:id", (req, res) => {
           + " and R.id = U.routeId and R.localityId = " + localityId + ")"
           + " or (U.sos = 6 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
           + " and R.id = U.routeId and R.localityId = " + authLocalityId + ")"
-          + " or (U.speed > U.speedLimit + 30" +
-          + " and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
+          + " or (U.speed > U.speedLimit + 30 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
           + " and R.id = U.routeId and R.localityId = " + authLocalityId + ") and U.id != " + id;
 
         console.log("QUERY = " + selectVehicles);
