@@ -60,8 +60,8 @@ app.get("/login/:email/:password", (req, res) => {
 
   console.log("New login from " + email);
 
-  let query = "select U.id, U.email, U.name, U.latitude, U.longitude, U.altitude, U.speed, U.bearing, T.id as typeId, T.name as typeName, U.status, U.sos "
-    + "from User U, Type T where email = '" + email + "' and password = '" + password + "' and U.typeId = T.id";
+  let query = "select U.id, U.email, U.name, U.typeId, U.latitude, U.longitude, U.altitude, U.speed, U.bearing, U.status, U.sos "
+    + "from User U where email = '" + email + "' and password = '" + password + "'";
 
   db.query(query, (err, result) => {
     if (err) {
