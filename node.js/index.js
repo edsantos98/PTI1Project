@@ -423,15 +423,17 @@ app.get("/traffic/:segments", (req, res) => {
 
             if (result == null) {
               c = 0;
+              nVehicles[counter] = 0;
             }
 
             else {
               c = parseInt(result[0].count);
+              nVehicles[counter] = parseInt(result[0].count);
             }
   
             //console.log("NEARBY RESULT " + result[0].count);
 
-            nVehicles[counter] = parseInt(result[0].count);
+            
 
             if (c <= 2) {
               traffic[counter] = 0;
