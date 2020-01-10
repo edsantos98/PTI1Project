@@ -421,7 +421,7 @@ app.get("/traffic/:segments", (req, res) => {
           db.query(nearbyQuery, (err, result) => {
             let c;
 
-            if (result.length == 0) {
+            if (result == null) {
               c = 0;
             }
 
