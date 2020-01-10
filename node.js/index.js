@@ -978,7 +978,7 @@ app.post("/signup", (req, res) => {
     });
 
     userQuery = (authLocalityId) => {
-      let query = "insert into User(email, name, password, authLocalityId, latitude, longitude) values('" + email + "', '" + name + "', '" + password + "', " + authLocalityId + ", " + latitude + ", " + longitude + ")";
+      let query = "insert into User(email, name, password, authLocalityId, latitude, longitude, routeId) values('" + email + "', '" + name + "', '" + password + "', " + authLocalityId + ", " + latitude + ", " + longitude + ", 1)";
 
       db.query(query, (err, result) => {
         console.log("POST/signup -> updated " + email + ", " + password + ", " + name + ", " + authLocalityId + ", " + latitude + ", " + longitude);

@@ -1,0 +1,2 @@
+select U.typeId, U.latitude, U.longitude, U.altitude, U.speed, U.bearing, U.speedLimit, UNIX_TIMESTAMP(U.lastTimestamp) as lastTimestamp, R.id as routeId, R.name as routeName, L.id as localityId, L.name as localityName, U.authLocalityId
+from User U, Route R, Locality L where U.id = 22 and R.id = U.routeId and L.id = R.localityId;
