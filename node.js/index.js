@@ -841,14 +841,12 @@ app.get("/data/:id", (req, res) => {
 
       case 6: //Polícia
         selectVehicles = selectOut + " from User U, Route R"
-          + " where (U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
+          + " where ((U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
           + " and R.id = U.routeId and R.localityId = " + localityId + ")"
           + " or (U.sos = 6 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
           + " and R.id = U.routeId and R.localityId = " + authLocalityId + ")"
           + " or (U.speed > U.speedLimit + 30 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
-          + " and R.id = U.routeId and R.localityId = " + authLocalityId + ") and U.id != " + id;
-
-        console.log("QUERY = " + selectVehicles);
+          + " and R.id = U.routeId and R.localityId = " + authLocalityId + ")) and U.id != " + id;
 
         db.query(selectVehicles, (err, result) => {
           //console.log("selectTypes:")
