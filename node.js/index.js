@@ -576,12 +576,15 @@ app.get("/data/:id", (req, res) => {
         else {
           traffic = 2;
         }
+        
+        console.log("c = " + c);
 
         typesQuery(myJson, traffic, localityId, authLocalityId, typeId);
       });
     }
 
     else {
+      console.log("c = none");
       typesQuery(myJson, 0, localityId, authLocalityId, typeId);
     }
   });
