@@ -646,7 +646,9 @@ app.get("/data/:id", (req, res) => {
             vehicles: vehicles
           });
 
-          console.log("GET/data/" + id + " responding -> " + dataJson.length);
+          console.log("GET/data/" + id + " responding -> " + latitude + "º, " + longitude + "º, " + altitude + " m, "
+            + speed + " km/h (" + speedLimit + "), " + bearing + "º, " + routeName + ", " + localityName + ", t"
+            + traffic + ", v" + vehicles.length);
           res.send(dataJson);
         });
 
