@@ -252,7 +252,7 @@ app.get("/traffic/:segments", (req, res) => {
   let segments = JSON.parse(req.params.segments);
 
   //console.log("GOT SEGMENTS JSON ", segments);
-
+  var trafficDelay = 0;
   var counter = 0;
 
   let total = segments.length;
@@ -260,6 +260,7 @@ app.get("/traffic/:segments", (req, res) => {
   var latitude = [];
   var longitude = [];
   var routeLength = [];
+  var routeDuration = [];
   var nVehicles = [];
   var traffic = [];
   var routeNames = [];
@@ -273,6 +274,7 @@ app.get("/traffic/:segments", (req, res) => {
     latitude[i] = segment.latitude;
     longitude[i] = segment.longitude;
     routeLength[i] = segment.routeLength;
+    routeDuration[i] = segment.routeDuration;
 
     if (i == 0) {
       coordinates = latitude[i] + "," + longitude[i];
@@ -414,7 +416,7 @@ app.get("/traffic/:segments", (req, res) => {
           routeIds[counter] = routeId;
 
           let nearbyQuery = "select count(*) as count from User "
-            + "where routeId = " + routeId + " and speed < " + speedLimit[counter] * 1.8 + " "
+            + "where routeId = " + routeId + " and speed < " + speedLimit[counter] * 0.8 + " "
             + "and lastTimestamp >= CURRENT_TIMESTAMP - " + timeout;
           //console.log("NEARBY QUERY " + nearbyQuery);
 
@@ -427,7 +429,7 @@ app.get("/traffic/:segments", (req, res) => {
             }
 
             else {
-              c = parseInt(result[0].count);
+              c = parseInt(result[0].count) * 50 / routeLength[counter];
               nVehicles[counter] = parseInt(result[0].count);
             }
   
@@ -435,16 +437,18 @@ app.get("/traffic/:segments", (req, res) => {
 
             
 
-            if (c <= 2) {
+            if (c <= 4) {
               traffic[counter] = 0;
             }
 
-            else if (c > 2 && c <= 4) {
+            else if (c > 4 && c <= 9) {
               traffic[counter] = 1;
+              trafficDelay += routeDuration[counter] * 0.5;
             }
 
             else {
               traffic[counter] = 2;
+              trafficDelay += routeDuration[counter] * (c / 10);
             }
 
             //console.log('CCCCCCCC: ' + c + ' ' + nVehicles[counter] + ' ' + traffic[counter]);
@@ -458,6 +462,7 @@ app.get("/traffic/:segments", (req, res) => {
 
             else {
               let trafficJson = {
+                delay: trafficDelay,
                 traffic: traffic,
                 nVehicles: nVehicles,
                 routeLength: routeLength,
@@ -482,6 +487,7 @@ app.get("/traffic/:segments", (req, res) => {
           //console.log("c = idk, traffic = " + traffic);
 
           let trafficJson = {
+            delay: trafficDelay,
             traffic: traffic,
             nVehicles: nVehicles,
             routeLength: routeLength,
@@ -537,7 +543,7 @@ app.get("/data/:id", (req, res) => {
       localityName
     }
 
-    if (speed < speedLimit * 0.8 && lastTimestamp >= Math.round((new Date()).getTime() / 1000) - timeout) {
+    if (speed < speedLimit * 0.8 /*&& lastTimestamp >= Math.round((new Date()).getTime() / 1000) - timeout*/) {
       let nearbyQuery = "select latitude, longitude from User"
         + " where routeId = " + routeId + " and speed < " + speedLimit * 0.8
         + " and lastTimestamp >= CURRENT_TIMESTAMP - " + timeout;
@@ -559,11 +565,11 @@ app.get("/data/:id", (req, res) => {
           }
         });
 
-        if (c <= 5) {
+        if (c <= 4) {
           traffic = 0;
         }
 
-        else if (5 < c <= 10) {
+        else if (c > 4 && c <= 9) {
           traffic = 1;
         }
 
@@ -571,7 +577,7 @@ app.get("/data/:id", (req, res) => {
           traffic = 2;
         }
 
-        typesQuery(myJson, c, localityId, authLocalityId, typeId);
+        typesQuery(myJson, traffic, localityId, authLocalityId, typeId);
       });
     }
 
