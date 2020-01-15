@@ -475,6 +475,7 @@ app.get("/traffic/:segments", (req, res) => {
               //console.log(trafficJson);
               console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
               res.send(JSON.stringify(trafficJson));
+              res.end(JSON.stringify(trafficJson));
             }
           })
         }
