@@ -95,6 +95,8 @@ app.put("/data/:id", (req, res) => {
   var locality = req.body.locality;
   var speedLimit = req.body.speedLimit;
 
+  console.log("PUT/data/" + id + " received");
+
   //console.log("[PUTTED] " + id + " " + latitude + " " + longitude + " " + altitude + " " + speed + " " + bearing + " " + route + " " + locality + " " + speedLimit);
 
   let selectLocality = "select id from Locality where name = '" + locality + "'";
