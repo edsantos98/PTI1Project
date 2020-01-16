@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 const fetch = require("node-fetch");
 const app = express();
 
-const timeout = 60000000;
+const timeout = 60;
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://35.246.98.225:3000");
