@@ -423,6 +423,10 @@ app.get("/traffic/:segments", (req, res) => {
           //console.log("NEARBY QUERY " + nearbyQuery);
 
           db.query(nearbyQuery, (err, result) => {
+            if (err) {
+              console.log("nearby err " + err);
+            }
+
             let c;
 
             if (result == null) {
@@ -477,7 +481,7 @@ app.get("/traffic/:segments", (req, res) => {
               try {
                 res.send(JSON.stringify(trafficJson));
               } catch (error) {
-                console.log('RIP');
+                console.log('RIP ' + error);
               }
             }
           })
@@ -506,7 +510,7 @@ app.get("/traffic/:segments", (req, res) => {
           try {
             res.send(JSON.stringify(trafficJson));
           } catch (error) {
-            console.log('RIP');
+            console.log('RIP ' + error);
           }
         }
       }
