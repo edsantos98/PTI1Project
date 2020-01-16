@@ -1035,6 +1035,7 @@ app.post("/signup", (req, res) => {
 
     let selectLocality = "select id from Locality where name = '" + locality + "'";
     let authLocalityId = -1;
+    console.log(">> selectLocality | " + selectLocality);
 
     db.query(selectLocality, (err, result) => {
       try {
@@ -1046,7 +1047,9 @@ app.post("/signup", (req, res) => {
 
       catch (e) {
         let insertLocality = "insert into Locality(name) VALUES('" + locality + "')";
+        console.log(">> insertLocality | " + insertLocality);
         db.query(insertLocality, (err, result) => {
+          console.log(">> selectLocality2 | " + selectLocality);
           db.query(selectLocality, (err, result) => {
             if (result[0].id) {
               authLocalityId = result[0].id;
@@ -1059,7 +1062,7 @@ app.post("/signup", (req, res) => {
 
     userQuery = (authLocalityId) => {
       let query = "insert into User(email, name, password, authLocalityId, latitude, longitude, routeId) values('" + email + "', '" + name + "', '" + password + "', " + authLocalityId + ", " + latitude + ", " + longitude + ", 1)";
-
+      console.log(">> query | " + query);
       db.query(query, (err, result) => {
         console.log("POST/signup -> updated " + email + ", " + password + ", " + name + ", " + authLocalityId + ", " + latitude + ", " + longitude);
         if (err) res.send(err).status(400);
