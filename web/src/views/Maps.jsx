@@ -280,7 +280,7 @@ class Maps extends React.Component {
     let distance = Math.acos(Math.sin(φA) * Math.sin(φB) + Math.cos(φA) * Math.cos(φB) * Math.cos(θB - θA)) * R;
     console.log(distance);
     if(distance < 20 && this.state.calculateDestination){
-      this.calculateDirection(true);
+      this.calculateDirection();
        
     }else{
       return this.state.calculateDestination;
