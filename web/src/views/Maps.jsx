@@ -217,8 +217,10 @@ class Maps extends React.Component {
       .catch(error => console.error('Error', error));
   }
 
-  calculateDirection = e =>{
-    e.preventDefault();
+  calculateDirection = e  =>{
+    console.log(e);
+    if(e)
+      e.preventDefault();
     const { isOpen } = this.state;
     isOpen[1] = false;
     console.log("calculate");
@@ -278,7 +280,7 @@ class Maps extends React.Component {
     let distance = Math.acos(Math.sin(φA) * Math.sin(φB) + Math.cos(φA) * Math.cos(φB) * Math.cos(θB - θA)) * R;
     console.log(distance);
     if(distance < 20 && this.state.calculateDestination){
-      this.calculateDirection();
+      this.calculateDirection(true);
        
     }else{
       return this.state.calculateDestination;
