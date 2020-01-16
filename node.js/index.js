@@ -357,6 +357,8 @@ app.get("/traffic/:segments", (req, res) => {
             break;
         }
       }
+
+      console.log(tester + "." + tester2 + ". geocode2");
       
       //console.log("GOOGLE RESPONSES " + route + " " + locality )
 
