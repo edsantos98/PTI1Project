@@ -390,6 +390,7 @@ app.get("/traffic/:segments", (req, res) => {
       });
 
       routeQuery = (localityId) => {
+        console.log(tester + "." + tester2 + ". locality " + localityId);
         //console.log("LOCALITY RESULT " + localityId);
         routeNames[counter] = route;
         let selectRoute = "select id from Route where name = '" + route + "' and localityId = " + localityId;
@@ -420,7 +421,7 @@ app.get("/traffic/:segments", (req, res) => {
       }
 
       getTraffic = (routeId) => {
-        console.log(tester + "." + tester2 + ". pretraffic");
+        console.log(tester + "." + tester2 + ". route " + routeId);
         //console.log("ROUTE RESULT " + routeId);
         
         //console.log("COUTNER " + counter + " | LIMIT " + speedLimit[counter] + " | TOTAL " + total);
