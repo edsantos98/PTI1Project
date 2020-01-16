@@ -474,7 +474,11 @@ app.get("/traffic/:segments", (req, res) => {
     
               //console.log(trafficJson);
               console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
-              res.send(JSON.stringify(trafficJson));
+              try {
+                res.send(JSON.stringify(trafficJson));
+              } catch (error) {
+                console.log('RIP');
+              }
             }
           })
         }
@@ -499,7 +503,11 @@ app.get("/traffic/:segments", (req, res) => {
 
           //console.log(trafficJson);
           console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
-          res.send(JSON.stringify(trafficJson));
+          try {
+            res.send(JSON.stringify(trafficJson));
+          } catch (error) {
+            console.log('RIP');
+          }
         }
       }
     })
