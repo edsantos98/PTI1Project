@@ -476,7 +476,9 @@ app.get("/traffic/:segments", (req, res) => {
             
             if (counter < total) {
               counter ++;
-              geocoder();
+              setTimeout(function () {
+                geocoder();
+              }, 50);
             }
 
             else {
