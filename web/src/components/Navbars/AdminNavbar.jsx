@@ -192,12 +192,7 @@ class AdminNavbar extends React.Component {
                       <>
                       <div className="pr-0 text-white">
                         <Media className="align-items-center">
-                        <span className="avatar avatar-sm rounded-circle">
-                          <img
-                            alt="..."
-                            src={require("assets/img/theme/team-4-800x800.jpg")}
-                          />
-                        </span>
+                        
                         <Media className="ml-2 d-block">
                           <span className="mb-0 text-sm font-weight-bold">
                             {auth.authSession.name}
@@ -219,12 +214,7 @@ class AdminNavbar extends React.Component {
                     ) : (
                       <div className="pr-0 text-white">
                         <Media className="align-items-center">
-                          <span className="avatar avatar-sm rounded-circle">
-                            <img
-                              alt="..."
-                              src={require("assets/img/theme/team-4-800x800.jpg")}
-                            />
-                          </span>
+                          
                           <Media className="ml-2 d-block">
                             <span className="mb-0 text-sm font-weight-bold">
                               {auth.authSession.name}
