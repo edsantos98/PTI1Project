@@ -507,8 +507,9 @@ app.get("/traffic/:segments", (req, res, next) => {
           }
         })
       }
+      throw new Error('BROKEN');
     } catch (error) {
-      console.log("RIP");
+      console.log('RIP');
       next(error);
     }
   }, 100);  
