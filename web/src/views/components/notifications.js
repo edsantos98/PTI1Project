@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Alert } from "reactstrap";
 import UserContext from '../../context/auth.js';
 
-const typeName = ['Anónimo', 'Padrão', 'Autoritário', 'Táxi', 'Ambulância', 'Polícia', 'Reboque'];
+const typeName = ['Anónimo', 'Padrão', 'Autoritário', 'Táxi', 'Autocarro', 'Ambulância', 'Polícia', 'Reboque'];
 const notUndefined = anyValue => typeof anyValue !== 'undefined';
 
 export default class Notifications extends Component {
