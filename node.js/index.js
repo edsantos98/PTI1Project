@@ -249,7 +249,7 @@ app.put("/types/:id", (req, res) => {
   }); 
 });
 
-app.get("/traffic/:segments", (req, res) => {
+app.get("/traffic/:segments", (req, res, next) => {
   //console.log("GOT SEGMENTS ", req.params.segments);
   let segments = JSON.parse(req.params.segments);
 
@@ -474,8 +474,8 @@ app.get("/traffic/:segments", (req, res) => {
     
               //console.log(trafficJson);
               console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
-              return res.send(JSON.stringify(trafficJson));
-              //res.end(JSON.stringify(trafficJson));
+              if (req.user) return res.send(JSON.stringify(trafficJson));
+              next();
             }
           })
         }
@@ -500,7 +500,8 @@ app.get("/traffic/:segments", (req, res) => {
 
           //console.log(trafficJson);
           console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
-          return res.send(JSON.stringify(trafficJson));
+          if (req.user) return res.send(JSON.stringify(trafficJson));
+          next();
         }
       }
     })
