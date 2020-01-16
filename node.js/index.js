@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 const fetch = require("node-fetch");
 const app = express();
 
-const timeout = 60000000;
+const timeout = 60;
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://azkeryon.duckdns.org:3000");
@@ -251,8 +251,11 @@ app.put("/types/:id", (req, res) => {
 
 var tester = 0;
 var tester2 = 0;
+var isOk = true;
+var trafficJson;
 
 app.get("/traffic/:segments", (req, res) => {
+  isOk = false;
   tester ++;
   //console.log("GOT SEGMENTS ", req.params.segments);
   let segments = JSON.parse(req.params.segments);
@@ -377,6 +380,14 @@ app.get("/traffic/:segments", (req, res) => {
             routeQuery(localityId);
           }
           console.log(tester + "." + tester2 + "I SHOULDN'T BE HERE");
+          if (!isOk) {
+            console.log(tester + ". GET/traffic fixing -> " + JSON.stringify(trafficJson));
+            try {
+              res.send(JSON.stringify(trafficJson));
+            } catch (error) {
+              console.log(tester + '. RIP ' + error);
+            }
+          }
         }
 
         catch (e) {
@@ -396,6 +407,7 @@ app.get("/traffic/:segments", (req, res) => {
 
       routeQuery = (localityId) => {
         console.log(tester + "." + tester2 + ". locality " + localityId);
+        isOk = true;
         //console.log("LOCALITY RESULT " + localityId);
         routeNames[counter] = route;
         let selectRoute = "select id from Route where name = '" + route + "' and localityId = " + localityId;
@@ -488,7 +500,7 @@ app.get("/traffic/:segments", (req, res) => {
             }
 
             else {
-              let trafficJson = {
+              trafficJson = {
                 delay: trafficDelay,
                 traffic: traffic,
                 nVehicles: nVehicles,
@@ -518,7 +530,7 @@ app.get("/traffic/:segments", (req, res) => {
 
           //console.log("c = idk, traffic = " + traffic);
 
-          let trafficJson = {
+          trafficJson = {
             delay: trafficDelay,
             traffic: traffic,
             nVehicles: nVehicles,
