@@ -363,12 +363,12 @@ app.get("/traffic/:segments", (req, res) => {
       //console.log("GOOGLE RESPONSES " + route + " " + locality )
 
       let selectLocality = "select id from Locality where name = '" + locality + "'";
-      //console.log("LOCALITY QUERY " + selectLocality);
+      console.log("LOCALITY QUERY " + selectLocality);
       var localityId = -1;
 
       db.query(selectLocality, (err, result) => {
         try {
-          //console.log("localoty result =>"+result);
+          console.log("localoty try result =>"+result);
 
           if (result[0].id) {
             localityId = result[0].id;
@@ -378,7 +378,7 @@ app.get("/traffic/:segments", (req, res) => {
 
         catch (e) {
           let insertLocality = "insert into Locality(name) VALUES('" + locality + "')";
-          //console.log("LOCALITY QUERY " + insertLocality);
+          console.log("LOCALITY QUERY2 " + insertLocality);
           db.query(insertLocality, (err, result) => {
             db.query(selectLocality, (err, result) => {
               //console.log("locality result => " + result)
