@@ -87,7 +87,7 @@ export default class DisplayInfo extends Component {
                                             </span>
                                         </Col>
                                         <Col className="col-6">
-                                            <img width='36%' src={ speedLimits[parseInt(infoUser.speedLimit/10) -1]} />
+                                            <img width='36%' src={ speedLimits[parseInt(infoUser.speedLimit/10) -1]} alt="SL" />
                                         </Col>
                                     </Row>
                                 )}

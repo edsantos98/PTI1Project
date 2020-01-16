@@ -58,7 +58,7 @@ export default class DistanceRender extends React.Component {
                     const getTraffic = () => {
                         axios.get(API_Traffic + JSON.stringify(middlePoints),{timeout:2000})
                         .then(response => {/* handle the response */
-                            console.log("Result: ",res)
+                            console.log("Result: ",response)
                             const res = response.data;
                             const routeInfo = { address: result.routes[0].legs[0].end_address,
                                 distance: result.routes[0].legs[0].distance.text,
