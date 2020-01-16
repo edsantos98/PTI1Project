@@ -474,7 +474,7 @@ app.get("/traffic/:segments", (req, res) => {
     
               //console.log(trafficJson);
               console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
-              return res.send(JSON.stringify(trafficJson));
+              res.send(JSON.stringify(trafficJson));
             }
           })
         }
@@ -499,7 +499,7 @@ app.get("/traffic/:segments", (req, res) => {
 
           //console.log(trafficJson);
           console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
-          return res.send(JSON.stringify(trafficJson));
+          res.send(JSON.stringify(trafficJson));
         }
       }
     })
