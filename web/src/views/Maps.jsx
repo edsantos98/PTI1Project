@@ -217,8 +217,10 @@ class Maps extends React.Component {
       .catch(error => console.error('Error', error));
   }
 
-  calculateDirection = e =>{
-    e.preventDefault();
+  calculateDirection = e  =>{
+    console.log(e);
+    if(e)
+      e.preventDefault();
     const { isOpen } = this.state;
     isOpen[1] = false;
     console.log("calculate");
