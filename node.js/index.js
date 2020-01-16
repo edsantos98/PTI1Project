@@ -368,20 +368,20 @@ app.get("/traffic/:segments", (req, res) => {
 
       db.query(selectLocality, (err, result) => {
         try {
-          console.log("localoty try result:");
+          console.log(tester + "." + tester2 + "localoty try result:");
           console.log(result);
 
           if (result[0].id) {
             localityId = result[0].id;
-            console.log("I SHOULD BE HERE");
+            console.log(tester + "." + tester2 + "I SHOULD BE HERE (" + localityId + ")");
             routeQuery(localityId);
           }
-          console.log("I SHOULDN'T BE HERE");
+          console.log(tester + "." + tester2 + "I SHOULDN'T BE HERE");
         }
 
         catch (e) {
           let insertLocality = "insert into Locality(name) VALUES('" + locality + "')";
-          console.log("LOCALITY QUERY2 " + insertLocality);
+          console.log(tester + "." + tester2 + "LOCALITY QUERY2 " + insertLocality);
           db.query(insertLocality, (err, result) => {
             db.query(selectLocality, (err, result) => {
               //console.log("locality result => " + result)
