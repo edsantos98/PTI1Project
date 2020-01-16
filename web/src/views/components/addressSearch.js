@@ -1,9 +1,5 @@
 import React from 'react';
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
-import { Card, Container, Row, Form, FormGroup, Col, Input, InputGroup, InputGroupAddon, InputGroupText, Button } from "reactstrap";
+import { FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
 
 export default class AutoSearchInput extends React.Component {
   constructor(props) {
