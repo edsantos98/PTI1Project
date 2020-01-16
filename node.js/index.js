@@ -368,7 +368,8 @@ app.get("/traffic/:segments", (req, res) => {
 
       db.query(selectLocality, (err, result) => {
         try {
-          console.log("localoty try result =>"+result);
+          console.log("localoty try result:");
+          console.log(result);
 
           if (result[0].id) {
             localityId = result[0].id;
