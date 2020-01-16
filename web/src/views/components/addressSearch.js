@@ -1,4 +1,5 @@
 import React from 'react';
+import PlacesAutocomplete from 'react-places-autocomplete';
 import { FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
 
 export default class AutoSearchInput extends React.Component {
