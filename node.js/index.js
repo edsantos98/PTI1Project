@@ -249,220 +249,248 @@ app.put("/types/:id", (req, res) => {
   }); 
 });
 
-app.get("/traffic/:segments", (req, res) => {
-  //console.log("GOT SEGMENTS ", req.params.segments);
-  let segments = JSON.parse(req.params.segments);
+app.get("/traffic/:segments", (req, res, next) => {
+  setTimeout(() => {
+    try {
+      //console.log("GOT SEGMENTS ", req.params.segments);
+      let segments = JSON.parse(req.params.segments);
 
-  //console.log("GOT SEGMENTS JSON ", segments);
-  var trafficDelay = 0;
-  var counter = 0;
+      //console.log("GOT SEGMENTS JSON ", segments);
+      var trafficDelay = 0;
+      var counter = 0;
 
-  let total = segments.length;
+      let total = segments.length;
 
-  var latitude = [];
-  var longitude = [];
-  var routeLength = [];
-  var routeDuration = [];
-  var nVehicles = [];
-  var traffic = [];
-  var routeNames = [];
-  var routeIds = [];
-  var speedLimit = [];
-  var coordinates = "";
+      var latitude = [];
+      var longitude = [];
+      var routeLength = [];
+      var routeDuration = [];
+      var nVehicles = [];
+      var traffic = [];
+      var routeNames = [];
+      var routeIds = [];
+      var speedLimit = [];
+      var coordinates = "";
 
-  console.log("GET/traffic/" + req.params.segments + " received");
+      console.log("GET/traffic/" + req.params.segments + " received");
 
-  segments.forEach((segment, i) => {
-    latitude[i] = segment.latitude;
-    longitude[i] = segment.longitude;
-    routeLength[i] = segment.routeLength;
-    routeDuration[i] = segment.routeDuration;
+      segments.forEach((segment, i) => {
+        latitude[i] = segment.latitude;
+        longitude[i] = segment.longitude;
+        routeLength[i] = segment.routeLength;
+        routeDuration[i] = segment.routeDuration;
 
-    if (i == 0) {
-      coordinates = latitude[i] + "," + longitude[i];
-    }
-
-    else {
-      coordinates += "|" + latitude[i] + "," + longitude[i];
-    }
-  });
-  
-  fetch("https://roads.googleapis.com/v1/speedLimits?path=" + coordinates + "&key=AIzaSyADYWIGFSnn3DHlJblK0hntz5KQiwbD0hk")
-  .then(response => response.json())
-  .then(json => {
-    json.speedLimits.forEach((limit, i) => {
-      speedLimit[i] = limit.speedLimit;
-    });
-
-    //console.log("SPEED LIMITS " + speedLimit);
-
-    geocoder();
-  });
-
-  geocoder = () => {
-    fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude[counter] + "," + longitude[counter] + "&key=AIzaSyADYWIGFSnn3DHlJblK0hntz5KQiwbD0hk")
-    .then(response => response.json()).then(json => {
-      var locality = "Unknown";
-      var route = "Unknown";
-
-      var gotRoute = false;
-      var gotLocality = false;
-      var results = json.results;
-
-      for (var i = 0; i < results.length; i ++) {
-        var address_components = results[i].address_components;
-
-        for (var j = 0; j < address_components.length; j ++) {
-          var type = address_components[j].types[0];
-          
-          if (!gotRoute && type != "street_number" && type != "route") {
-            break;
-          }
-
-          if (type == "route") {
-            route = address_components[j].short_name;
-            //console.log("ROUTE " + route);
-            gotRoute = true;
-          }
-
-          if (gotRoute) {
-            if (type == "locality" || type == "sublocality" || type == "neighborhood") {
-              locality = address_components[j].short_name;
-              //console.log("LOCALITY " + locality);
-              gotLocality = true;
-
-              break;
-            }
-          }
-        }
-
-        if (!gotRoute || !gotLocality) {
-          route = "Unknown";
-          locality = "Unknown";
-          gotRoute = false;
-          gotLocality = false;
+        if (i == 0) {
+          coordinates = latitude[i] + "," + longitude[i];
         }
 
         else {
-            break;
+          coordinates += "|" + latitude[i] + "," + longitude[i];
         }
-      }
+      });
       
-      //console.log("GOOGLE RESPONSES " + route + " " + locality )
+      fetch("https://roads.googleapis.com/v1/speedLimits?path=" + coordinates + "&key=AIzaSyADYWIGFSnn3DHlJblK0hntz5KQiwbD0hk")
+      .then(response => response.json())
+      .then(json => {
+        json.speedLimits.forEach((limit, i) => {
+          speedLimit[i] = limit.speedLimit;
+        });
 
-      let selectLocality = "select id from Locality where name = '" + locality + "'";
-      //console.log("LOCALITY QUERY " + selectLocality);
-      var localityId = -1;
+        //console.log("SPEED LIMITS " + speedLimit);
 
-      db.query(selectLocality, (err, result) => {
-        try {
-          //console.log("localoty result =>"+result);
+        geocoder();
+      });
 
-          if (result[0].id) {
-            localityId = result[0].id;
-            routeQuery(localityId);
+      geocoder = () => {
+        fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude[counter] + "," + longitude[counter] + "&key=AIzaSyADYWIGFSnn3DHlJblK0hntz5KQiwbD0hk")
+        .then(response => response.json()).then(json => {
+          var locality = "Unknown";
+          var route = "Unknown";
+
+          var gotRoute = false;
+          var gotLocality = false;
+          var results = json.results;
+
+          for (var i = 0; i < results.length; i ++) {
+            var address_components = results[i].address_components;
+
+            for (var j = 0; j < address_components.length; j ++) {
+              var type = address_components[j].types[0];
+              
+              if (!gotRoute && type != "street_number" && type != "route") {
+                break;
+              }
+
+              if (type == "route") {
+                route = address_components[j].short_name;
+                //console.log("ROUTE " + route);
+                gotRoute = true;
+              }
+
+              if (gotRoute) {
+                if (type == "locality" || type == "sublocality" || type == "neighborhood") {
+                  locality = address_components[j].short_name;
+                  //console.log("LOCALITY " + locality);
+                  gotLocality = true;
+
+                  break;
+                }
+              }
+            }
+
+            if (!gotRoute || !gotLocality) {
+              route = "Unknown";
+              locality = "Unknown";
+              gotRoute = false;
+              gotLocality = false;
+            }
+
+            else {
+                break;
+            }
           }
-        }
+          
+          //console.log("GOOGLE RESPONSES " + route + " " + locality )
 
-        catch (e) {
-          let insertLocality = "insert into Locality(name) VALUES('" + locality + "')";
-          //console.log("LOCALITY QUERY " + insertLocality);
-          db.query(insertLocality, (err, result) => {
-            db.query(selectLocality, (err, result) => {
-              //console.log("locality result => " + result)
+          let selectLocality = "select id from Locality where name = '" + locality + "'";
+          //console.log("LOCALITY QUERY " + selectLocality);
+          var localityId = -1;
+
+          db.query(selectLocality, (err, result) => {
+            try {
+              //console.log("localoty result =>"+result);
+
               if (result[0].id) {
                 localityId = result[0].id;
                 routeQuery(localityId);
               }
-            });
-          });
-        }
-      });
-
-      routeQuery = (localityId) => {
-        //console.log("LOCALITY RESULT " + localityId);
-        routeNames[counter] = route;
-        let selectRoute = "select id from Route where name = '" + route + "' and localityId = " + localityId;
-        //console.log("ROUTE QUERY " + selectRoute);
-        var routeId = -1;
-
-        db.query(selectRoute, (err, result) => {
-          try {
-            if (result[0].id) {
-              routeId = result[0].id;
-              getTraffic(routeId);
             }
-          }
 
-          catch (e) {
-            let insertRoute = "insert into Route(name, localityId) VALUES('" + route + "', " + localityId + ")";
-            //console.log("ROUTE QUERY " + insertRoute);
-            db.query(insertRoute, (err, result) => {
-              db.query(selectRoute, (err, result) => {
+            catch (e) {
+              let insertLocality = "insert into Locality(name) VALUES('" + locality + "')";
+              //console.log("LOCALITY QUERY " + insertLocality);
+              db.query(insertLocality, (err, result) => {
+                db.query(selectLocality, (err, result) => {
+                  //console.log("locality result => " + result)
+                  if (result[0].id) {
+                    localityId = result[0].id;
+                    routeQuery(localityId);
+                  }
+                });
+              });
+            }
+          });
+
+          routeQuery = (localityId) => {
+            //console.log("LOCALITY RESULT " + localityId);
+            routeNames[counter] = route;
+            let selectRoute = "select id from Route where name = '" + route + "' and localityId = " + localityId;
+            //console.log("ROUTE QUERY " + selectRoute);
+            var routeId = -1;
+
+            db.query(selectRoute, (err, result) => {
+              try {
                 if (result[0].id) {
                   routeId = result[0].id;
                   getTraffic(routeId);
                 }
-              });
+              }
+
+              catch (e) {
+                let insertRoute = "insert into Route(name, localityId) VALUES('" + route + "', " + localityId + ")";
+                //console.log("ROUTE QUERY " + insertRoute);
+                db.query(insertRoute, (err, result) => {
+                  db.query(selectRoute, (err, result) => {
+                    if (result[0].id) {
+                      routeId = result[0].id;
+                      getTraffic(routeId);
+                    }
+                  });
+                });
+              }
             });
           }
-        });
-      }
 
-      getTraffic = (routeId) => {
-        //console.log("ROUTE RESULT " + routeId);
+          getTraffic = (routeId) => {
+            //console.log("ROUTE RESULT " + routeId);
+            
+            //console.log("COUTNER " + counter + " | LIMIT " + speedLimit[counter] + " | TOTAL " + total);
+
+            if (routeId != null) {
+              routeIds[counter] = routeId;
+
+              let nearbyQuery = "select count(*) as count from User "
+                + "where routeId = " + routeId + " and speed < " + speedLimit[counter] * 0.8 + " "
+                + "and lastTimestamp >= CURRENT_TIMESTAMP - " + timeout;
+              //console.log("NEARBY QUERY " + nearbyQuery);
+
+              db.query(nearbyQuery, (err, result) => {
+                let c;
+
+                if (result == null) {
+                  c = 0;
+                  nVehicles[counter] = 0;
+                }
+
+                else {
+                  c = parseInt(result[0].count) * 50 / routeLength[counter];
+                  nVehicles[counter] = parseInt(result[0].count);
+                }
+      
+                //console.log("NEARBY RESULT " + result[0].count);
+
+                
+
+                if (c <= 4) {
+                  traffic[counter] = 0;
+                }
+
+                else if (c > 4 && c <= 9) {
+                  traffic[counter] = 1;
+                  trafficDelay += routeDuration[counter] * 0.5;
+                }
+
+                else {
+                  traffic[counter] = 2;
+                  trafficDelay += routeDuration[counter] * (c / 10);
+                }
+
+                //console.log('CCCCCCCC: ' + c + ' ' + nVehicles[counter] + ' ' + traffic[counter]);
+
+                //console.log("c = " + c + ", traffic = " + traffic);
+                
+                if (counter < total) {
+                  counter ++;
+                  geocoder();
+                }
+
+                else {
+                  let trafficJson = {
+                    delay: trafficDelay,
+                    traffic: traffic,
+                    nVehicles: nVehicles,
+                    routeLength: routeLength,
+                    routeIds: routeIds,
+                    speedLimit: speedLimit
+                  };
         
-        //console.log("COUTNER " + counter + " | LIMIT " + speedLimit[counter] + " | TOTAL " + total);
-
-        if (routeId != null) {
-          routeIds[counter] = routeId;
-
-          let nearbyQuery = "select count(*) as count from User "
-            + "where routeId = " + routeId + " and speed < " + speedLimit[counter] * 0.8 + " "
-            + "and lastTimestamp >= CURRENT_TIMESTAMP - " + timeout;
-          //console.log("NEARBY QUERY " + nearbyQuery);
-
-          db.query(nearbyQuery, (err, result) => {
-            let c;
-
-            if (result == null) {
-              c = 0;
-              nVehicles[counter] = 0;
+                  //console.log(trafficJson);
+                  console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
+                  res.send(JSON.stringify(trafficJson));
+                  //res.end(JSON.stringify(trafficJson));
+                }
+              })
             }
 
             else {
-              c = parseInt(result[0].count) * 50 / routeLength[counter];
-              nVehicles[counter] = parseInt(result[0].count);
-            }
-  
-            //console.log("NEARBY RESULT " + result[0].count);
+              traffic[counter] = traffic[counter - 1];
+              nVehicles[counter] = nVehicles[counter - 1];
+              routeLength[counter] = routeLength[counter - 1];
+              routeIds[counter] = routeIds[counter - 1];
+              speedLimit[counter] = speedLimit[counter - 1];
 
-            
+              //console.log("c = idk, traffic = " + traffic);
 
-            if (c <= 4) {
-              traffic[counter] = 0;
-            }
-
-            else if (c > 4 && c <= 9) {
-              traffic[counter] = 1;
-              trafficDelay += routeDuration[counter] * 0.5;
-            }
-
-            else {
-              traffic[counter] = 2;
-              trafficDelay += routeDuration[counter] * (c / 10);
-            }
-
-            //console.log('CCCCCCCC: ' + c + ' ' + nVehicles[counter] + ' ' + traffic[counter]);
-
-            //console.log("c = " + c + ", traffic = " + traffic);
-            
-            if (counter < total) {
-              counter ++;
-              geocoder();
-            }
-
-            else {
               let trafficJson = {
                 delay: trafficDelay,
                 traffic: traffic,
@@ -471,41 +499,19 @@ app.get("/traffic/:segments", (req, res) => {
                 routeIds: routeIds,
                 speedLimit: speedLimit
               };
-    
+
               //console.log(trafficJson);
               console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
               res.send(JSON.stringify(trafficJson));
-              //res.end(JSON.stringify(trafficJson));
             }
-          })
-        }
-
-        else {
-          traffic[counter] = traffic[counter - 1];
-          nVehicles[counter] = nVehicles[counter - 1];
-          routeLength[counter] = routeLength[counter - 1];
-          routeIds[counter] = routeIds[counter - 1];
-          speedLimit[counter] = speedLimit[counter - 1];
-
-          //console.log("c = idk, traffic = " + traffic);
-
-          let trafficJson = {
-            delay: trafficDelay,
-            traffic: traffic,
-            nVehicles: nVehicles,
-            routeLength: routeLength,
-            routeIds: routeIds,
-            speedLimit: speedLimit
-          };
-
-          //console.log(trafficJson);
-          console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
-          res.send(JSON.stringify(trafficJson));
-        }
+          }
+        })
       }
-    })
-  }
-  
+    } catch (error) {
+      console.log("RIP");
+      next(error);
+    }
+  }, 100);  
 });
 
 app.get("/data/:id", (req, res) => {
