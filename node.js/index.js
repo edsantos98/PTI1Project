@@ -249,7 +249,11 @@ app.put("/types/:id", (req, res) => {
   }); 
 });
 
+var tester = 0;
+var tester2 = 0;
+
 app.get("/traffic/:segments", (req, res) => {
+  tester ++;
   //console.log("GOT SEGMENTS ", req.params.segments);
   let segments = JSON.parse(req.params.segments);
 
@@ -270,7 +274,7 @@ app.get("/traffic/:segments", (req, res) => {
   var speedLimit = [];
   var coordinates = "";
 
-  console.log("GET/traffic/" + req.params.segments + " received");
+  console.log(tester + ". GET/traffic/" + req.params.segments + " received");
 
   segments.forEach((segment, i) => {
     latitude[i] = segment.latitude;
@@ -294,14 +298,20 @@ app.get("/traffic/:segments", (req, res) => {
       speedLimit[i] = limit.speedLimit;
     });
 
-    //console.log("SPEED LIMITS " + speedLimit);
+    console.log(tester + ". speedLimits");
 
+    //console.log("SPEED LIMITS " + speedLimit);
+    tester2 = 0;
     geocoder();
   });
 
   geocoder = () => {
     fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude[counter] + "," + longitude[counter] + "&key=AIzaSyADYWIGFSnn3DHlJblK0hntz5KQiwbD0hk")
     .then(response => response.json()).then(json => {
+      tester2 ++;
+
+      console.log(tester + "." + tester2 + ". geocode");
+      
       var locality = "Unknown";
       var route = "Unknown";
 
@@ -410,6 +420,7 @@ app.get("/traffic/:segments", (req, res) => {
       }
 
       getTraffic = (routeId) => {
+        console.log(tester + "." + tester2 + ". pretraffic");
         //console.log("ROUTE RESULT " + routeId);
         
         //console.log("COUTNER " + counter + " | LIMIT " + speedLimit[counter] + " | TOTAL " + total);
@@ -423,6 +434,7 @@ app.get("/traffic/:segments", (req, res) => {
           //console.log("NEARBY QUERY " + nearbyQuery);
 
           db.query(nearbyQuery, (err, result) => {
+            console.log(tester + "." + tester2 + ". traffic");
             if (err) {
               console.log("nearby err " + err);
             }
@@ -477,17 +489,18 @@ app.get("/traffic/:segments", (req, res) => {
               };
     
               //console.log(trafficJson);
-              console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
+              console.log(tester + ". GET/traffic responding -> " + JSON.stringify(trafficJson));
               try {
                 res.send(JSON.stringify(trafficJson));
               } catch (error) {
-                console.log('RIP ' + error);
+                console.log(tester + '. RIP ' + error);
               }
             }
           })
         }
 
         else {
+          console.log(tester + "." + tester2 + ". null traffic");
           traffic[counter] = traffic[counter - 1];
           nVehicles[counter] = nVehicles[counter - 1];
           routeLength[counter] = routeLength[counter - 1];
@@ -506,11 +519,11 @@ app.get("/traffic/:segments", (req, res) => {
           };
 
           //console.log(trafficJson);
-          console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
+          console.log(tester + ". GET/traffic responding -> " + JSON.stringify(trafficJson));
           try {
             res.send(JSON.stringify(trafficJson));
           } catch (error) {
-            console.log('RIP ' + error);
+            console.log(tester + '. RIP ' + error);
           }
         }
       }
