@@ -32,7 +32,6 @@ import {
   Alert
 } from "reactstrap";
 // core components
-import UserHeader from "components/Headers/UserHeader.jsx";
 import Header from "components/Headers/Header.jsx";
 import UserContext  from '../context/auth.js';
 
@@ -67,7 +66,7 @@ class Profile extends React.Component {
     console.log("typeId: ",selectedUser);
     const options = [1,2,3,4,5,6];
     userOptions = options.map((opt, index) => {
-      return <option key={index} value={opt}> {(opt == selectedUser.typeId) ? typeName[opt] + ' (atual)' : typeName[opt]} </option>;
+      return <option key={index} value={opt}> {(opt === selectedUser.typeId) ? typeName[opt] + ' (atual)' : typeName[opt]} </option>;
     })
     this.setState({selectedUser, userOptions});
   }

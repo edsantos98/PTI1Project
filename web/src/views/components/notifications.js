@@ -33,15 +33,15 @@ export default class Notifications extends Component {
             notificationsVehicles = vehicles.map((vehicle, index) => {
                 let notify;
                
-                if (typeId === 2 && vehicle.sos > 0 || vehicle.sos === typeId){
+                if ((typeId === 2 && vehicle.sos > 0) || vehicle.sos === typeId){
                     notify = true;
                     if (this.state.lastVehicles){
                         console.log("last vehicles");
                         this.state.lastVehicles.every(myVehicle => {
                             console.log(myVehicle)
-                            if (vehicle.id == myVehicle.id) {
+                            if (vehicle.id === myVehicle.id) {
                                 console.log(myVehicle.id)
-                                if ((typeId == 2 && myVehicle.sos > 0) || myVehicle.sos == typeId) {
+                                if ((typeId === 2 && myVehicle.sos > 0) || myVehicle.sos === typeId) {
                                     console.log("notify false")
                                     notify = false;
                                     return false;
@@ -62,13 +62,13 @@ export default class Notifications extends Component {
                     }
                         
                 }
-                if ((typeId === 2 || typeId === 6) && vehicle.sos === 0 && vehicle.speed > vehicle.speedLimit + 20 && (vehicle.status == 1 || (vehicle.typeId != 5 && vehicle.typeId != 6))) {
+                if ((typeId === 2 || typeId === 6) && vehicle.sos === 0 && vehicle.speed > vehicle.speedLimit + 20 && (vehicle.status === 1 || (vehicle.typeId !== 5 && vehicle.typeId !== 6))) {
                     notify = true;
                     if (this.state.lastVehicles){
                         console.log("last vehicles");
                         this.state.lastVehicles.every(myVehicle => {
-                            if (vehicle.id == myVehicle.id) {
-                                if ((typeId == 2 || typeId == 6) && myVehicle.sos == 0 && myVehicle.speed > myVehicle.speedLimit + 20 && (myVehicle.status == 1 || (myVehicle.typeId != 5 && vehicle.typeId != 6))) {
+                            if (vehicle.id === myVehicle.id) {
+                                if ((typeId === 2 || typeId === 6) && myVehicle.sos === 0 && myVehicle.speed > myVehicle.speedLimit + 20 && (myVehicle.status === 1 || (myVehicle.typeId !== 5 && vehicle.typeId !== 6))) {
                                     console.log("notify false")
                                     notify = false;
                                     return false;
@@ -93,7 +93,7 @@ export default class Notifications extends Component {
                     if (this.state.lastVehicles){
                         console.log("last vehicles");
                         this.state.lastVehicles.every(myVehicle => {
-                            if (vehicle.id == myVehicle.id) {
+                            if (vehicle.id === myVehicle.id) {
                                 if (vehicle.status === id) {
                                     console.log("notify false")
                                     notify = false;

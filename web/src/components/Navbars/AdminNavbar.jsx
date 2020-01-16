@@ -36,7 +36,7 @@ import UserContext  from '../../context/auth.js';
 const API = "http://35.246.98.225:8000/status";
 
 const StatusDropdown = (props) => {
-  if (props.typeId == 3 || props.typeId == 4) {
+  if (props.typeId === 3 || props.typeId === 4) {
     console.log("status: "+props.myStatus);
     
     return (<>
