@@ -373,8 +373,10 @@ app.get("/traffic/:segments", (req, res) => {
 
           if (result[0].id) {
             localityId = result[0].id;
+            console.log("I SHOULD BE HERE");
             routeQuery(localityId);
           }
+          console.log("I SHOULDN'T BE HERE");
         }
 
         catch (e) {
