@@ -249,14 +249,14 @@ app.put("/types/:id", (req, res) => {
   }); 
 });
 
-var tester = 0;
-var tester2 = 0;
+//var tester = 0;
+//var tester2 = 0;
 var isOk = true;
 var trafficJson;
 
 app.get("/traffic/:segments", (req, res) => {
   isOk = false;
-  tester ++;
+  //tester ++;
   //console.log("GOT SEGMENTS ", req.params.segments);
   let segments = JSON.parse(req.params.segments);
 
@@ -277,7 +277,7 @@ app.get("/traffic/:segments", (req, res) => {
   var speedLimit = [];
   var coordinates = "";
 
-  console.log(tester + ". GET/traffic/" + req.params.segments + " received");
+  console.log("GET/traffic/" + req.params.segments + " received");
 
   segments.forEach((segment, i) => {
     latitude[i] = segment.latitude;
@@ -301,19 +301,19 @@ app.get("/traffic/:segments", (req, res) => {
       speedLimit[i] = limit.speedLimit;
     });
 
-    console.log(tester + ". speedLimits");
+    //console.log(tester + ". speedLimits");
 
     //console.log("SPEED LIMITS " + speedLimit);
-    tester2 = 0;
+    //tester2 = 0;
     geocoder();
   });
 
   geocoder = () => {
     fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude[counter] + "," + longitude[counter] + "&key=AIzaSyADYWIGFSnn3DHlJblK0hntz5KQiwbD0hk")
     .then(response => response.json()).then(json => {
-      tester2 ++;
+      //tester2 ++;
 
-      console.log(tester + "." + tester2 + ". geocode");
+      //console.log(tester + "." + tester2 + ". geocode");
       
       var locality = "Unknown";
       var route = "Unknown";
@@ -361,38 +361,38 @@ app.get("/traffic/:segments", (req, res) => {
         }
       }
 
-      console.log(tester + "." + tester2 + ". geocode2");
+      //console.log(tester + "." + tester2 + ". geocode2");
       
       //console.log("GOOGLE RESPONSES " + route + " " + locality )
 
       let selectLocality = "select id from Locality where name = '" + locality + "'";
-      console.log("LOCALITY QUERY " + selectLocality);
+      //console.log("LOCALITY QUERY " + selectLocality);
       var localityId = -1;
 
       db.query(selectLocality, (err, result) => {
         try {
-          console.log(tester + "." + tester2 + "localoty try result:");
-          console.log(result);
+          //console.log(tester + "." + tester2 + "localoty try result:");
+          //console.log(result);
 
           if (result[0].id) {
             localityId = result[0].id;
-            console.log(tester + "." + tester2 + "I SHOULD BE HERE (" + localityId + ")");
+            //console.log(tester + "." + tester2 + "I SHOULD BE HERE (" + localityId + ")");
             routeQuery(localityId);
           }
-          console.log(tester + "." + tester2 + "I SHOULDN'T BE HERE");
+          //console.log(tester + "." + tester2 + "I SHOULDN'T BE HERE");
           if (!isOk) {
-            console.log(tester + ". GET/traffic fixing -> " + JSON.stringify(trafficJson));
+            console.log("GET/traffic fixing -> " + JSON.stringify(trafficJson));
             try {
               res.send(JSON.stringify(trafficJson));
             } catch (error) {
-              console.log(tester + '. RIP ' + error);
+              console.log('RIP ' + error);
             }
           }
         }
 
         catch (e) {
           let insertLocality = "insert into Locality(name) VALUES('" + locality + "')";
-          console.log(tester + "." + tester2 + "LOCALITY QUERY2 " + insertLocality);
+          //console.log(tester + "." + tester2 + "LOCALITY QUERY2 " + insertLocality);
           db.query(insertLocality, (err, result) => {
             db.query(selectLocality, (err, result) => {
               //console.log("locality result => " + result)
@@ -406,7 +406,7 @@ app.get("/traffic/:segments", (req, res) => {
       });
 
       routeQuery = (localityId) => {
-        console.log(tester + "." + tester2 + ". locality " + localityId);
+        //console.log(tester + "." + tester2 + ". locality " + localityId);
         isOk = true;
         //console.log("LOCALITY RESULT " + localityId);
         routeNames[counter] = route;
@@ -438,7 +438,7 @@ app.get("/traffic/:segments", (req, res) => {
       }
 
       getTraffic = (routeId) => {
-        console.log(tester + "." + tester2 + ". route " + routeId);
+        //console.log(tester + "." + tester2 + ". route " + routeId);
         //console.log("ROUTE RESULT " + routeId);
         
         //console.log("COUTNER " + counter + " | LIMIT " + speedLimit[counter] + " | TOTAL " + total);
@@ -452,9 +452,9 @@ app.get("/traffic/:segments", (req, res) => {
           //console.log("NEARBY QUERY " + nearbyQuery);
 
           db.query(nearbyQuery, (err, result) => {
-            console.log(tester + "." + tester2 + ". traffic");
+            //console.log(tester + "." + tester2 + ". traffic");
             if (err) {
-              console.log("nearby err " + err);
+              //console.log("nearby err " + err);
             }
 
             let c;
@@ -510,18 +510,18 @@ app.get("/traffic/:segments", (req, res) => {
               };
     
               //console.log(trafficJson);
-              console.log(tester + ". GET/traffic responding -> " + JSON.stringify(trafficJson));
+              console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
               try {
                 res.send(JSON.stringify(trafficJson));
               } catch (error) {
-                console.log(tester + '. RIP ' + error);
+                console.log('RIP ' + error);
               }
             }
           })
         }
 
         else {
-          console.log(tester + "." + tester2 + ". null traffic");
+          //console.log(tester + "." + tester2 + ". null traffic");
           traffic[counter] = traffic[counter - 1];
           nVehicles[counter] = nVehicles[counter - 1];
           routeLength[counter] = routeLength[counter - 1];
@@ -540,11 +540,11 @@ app.get("/traffic/:segments", (req, res) => {
           };
 
           //console.log(trafficJson);
-          console.log(tester + ". GET/traffic responding -> " + JSON.stringify(trafficJson));
+          console.log("GET/traffic responding -> " + JSON.stringify(trafficJson));
           try {
             res.send(JSON.stringify(trafficJson));
           } catch (error) {
-            console.log(tester + '. RIP ' + error);
+            console.log('RIP ' + error);
           }
         }
       }
