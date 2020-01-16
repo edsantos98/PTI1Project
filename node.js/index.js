@@ -1024,7 +1024,7 @@ app.post("/signup", (req, res) => {
   let password = req.body.password;
   let locality = req.body.locality;
 
-  locality = locality.charAt(0).toUpperCase() + locality.substring(1);
+  locality = (locality.charAt(0).toUpperCase() + locality.substring(1)).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
   console.log("POST/signup receiving -> " + email + ", " + password + ", " + name + ", " + locality);
 
