@@ -4,10 +4,10 @@ var bodyParser = require('body-parser')
 const fetch = require("node-fetch");
 const app = express();
 
-const timeout = 60;
+const timeout = 60000000;
 
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://azkeryon.duckdns.org:3000");
+  res.header("Access-Control-Allow-Origin", "http://35.246.98.225:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   //res.header("Access-Control-Allow-Origin", "http://azkeryon.duckdns.org:3000");
