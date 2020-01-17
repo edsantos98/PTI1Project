@@ -75,8 +75,9 @@ export default class DisplayRouteInfo extends Component {
                                         Distância
                                         </CardTitle>
                                         <span className="h2 font-weight-bold mb-0">
-                                        {routeInfo.distance}
+                                        {(routeInfo.distance/1000).toFixed(1)}
                                         </span>
+                                        <span className="h5 font-weight-bold text-muted mb-0"> Km/h</span>
                                     </Col>
                                     <Col>
                                         <CardTitle
@@ -131,8 +132,9 @@ export default class DisplayRouteInfo extends Component {
                                         Distância
                                         </CardTitle>
                                         <span className="h2 font-weight-bold mb-0">
-                                        {routeInfo.distance}
+                                        {(routeInfo.distance/1000).toFixed(1)}
                                         </span>
+                                        <span className="h5 font-weight-bold text-muted mb-0"> Km/h</span>
                                     </Col>
                                     <Col>
                                         <CardTitle
@@ -142,8 +144,9 @@ export default class DisplayRouteInfo extends Component {
                                         Tempo de viagem
                                         </CardTitle>
                                         <span className="h2 font-weight-bold mb-0">
-                                        {routeInfo.duration}
+                                        {((routeInfo.duration+routeInfo.delay)/60).toFixed(0)}
                                         </span>
+                                        <span className="h5 font-weight-bold text-muted mb-0"> min</span>
                                     </Col>
                                     </Row>
                                 </CardBody>
