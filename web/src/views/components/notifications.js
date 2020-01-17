@@ -37,7 +37,7 @@ export default class Notifications extends Component {
                     notify = true;
                     if (this.state.lastVehicles){
                         console.log("last vehicles");
-                        this.state.lastVehicles.every(myVehicle => {
+                        this.state.lastVehicles.every(vehicle => {
                             console.log(myVehicle)
                             if (vehicle.id === myVehicle.id) {
                                 console.log(vehicle.id)
