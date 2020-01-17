@@ -707,10 +707,10 @@ app.get("/data/:id", (req, res) => {
 
       case 2: //Autoritário
         selectVehicles = selectOut + " from User U, Route R"
-          + " where (U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
+          + " where ((U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
           + " and R.id = U.routeId and R.localityId = " + localityId + ")"
           + " or (UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
-          + " and R.id = U.routeId and R.localityId = " + authLocalityId + ") and U.id != " + id;
+          + " and R.id = U.routeId and R.localityId = " + authLocalityId + ")) and U.id != " + id;
 
         //console.log(selectVehicles);
 
@@ -759,8 +759,8 @@ app.get("/data/:id", (req, res) => {
 
       case 3: //Táxi
         selectVehicles = selectOut + " from User U, Route R"
-          + " where U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
-          + " and R.id = U.routeId and R.localityId = " + localityId + " and U.id != " + id;
+          + " where (U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
+          + " and R.id = U.routeId and R.localityId = " + localityId + ") and U.id != " + id;
 
         db.query(selectVehicles, (err, result) => {
           //console.log("selectTypes:")
@@ -808,8 +808,8 @@ app.get("/data/:id", (req, res) => {
 
       case 4: //Autocarro
         selectVehicles = selectOut + " from User U, Route R"
-          + " where U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
-          + " and R.id = U.routeId and R.localityId = " + localityId + " and U.id != " + id;
+          + " where (U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
+          + " and R.id = U.routeId and R.localityId = " + localityId + ") and U.id != " + id;
 
         db.query(selectVehicles, (err, result) => {
           //console.log("selectTypes:")
@@ -857,10 +857,10 @@ app.get("/data/:id", (req, res) => {
 
       case 5: //Ambulância
         selectVehicles = selectOut + " from User U, Route R"
-          + " where (U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
+          + " where ((U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
           + " and R.id = U.routeId and R.localityId = " + localityId + ")"
           + " or (U.sos = 5 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
-          + " and R.id = U.routeId and R.localityId = " + authLocalityId + ") and U.id != " + id;
+          + " and R.id = U.routeId and R.localityId = " + authLocalityId + ")) and U.id != " + id;
 
         db.query(selectVehicles, (err, result) => {
           //console.log("selectTypes:")
