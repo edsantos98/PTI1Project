@@ -961,10 +961,10 @@ app.get("/data/:id", (req, res) => {
 
       case 7: //Reboque
         selectVehicles = selectOut + " from User U, Route R"
-          + " where (U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
+          + " where ((U.status > 0 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
           + " and R.id = U.routeId and R.localityId = " + localityId + ")"
           + " or (U.sos = 7 and UNIX_TIMESTAMP(U.lastTimestamp) >= UNIX_TIMESTAMP(CURRENT_TIMESTAMP()) - " + timeout
-          + " and R.id = U.routeId and R.localityId = " + authLocalityId + ") and U.id != " + id;
+          + " and R.id = U.routeId and R.localityId = " + authLocalityId + ")) and U.id != " + id;
 
         db.query(selectVehicles, (err, result) => {
           //console.log("selectTypes:")
