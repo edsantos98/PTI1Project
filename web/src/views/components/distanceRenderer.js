@@ -61,7 +61,7 @@ export default class DistanceRender extends React.Component {
                             console.log("Result: ",response)
                             const res = response.data;
                             const routeInfo = { address: result.routes[0].legs[0].end_address,
-                                distance: result.routes[0].legs[0].distance.text,
+                                distance: result.routes[0].legs[0].distance.value,
                                 duration: result.routes[0].legs[0].duration_in_traffic.value,
                                 delay: res.delay 
                             };

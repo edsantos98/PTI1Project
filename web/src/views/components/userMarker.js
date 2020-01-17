@@ -73,6 +73,8 @@ export default class UserMarker extends React.Component{
     }
 
     showInfo = ( index ) => {
+        console.log("STATE",this.state);
+        console.log(index)
         this.setState({
             showIndex: index,
             isOpen:true,

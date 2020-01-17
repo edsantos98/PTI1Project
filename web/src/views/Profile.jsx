@@ -150,7 +150,7 @@ class Profile extends React.Component {
                                     Selecionar utilizador
                                   </label>
                                 <Input className="form-control-alternative" name="allUsers" defaultValue="0" type="select" id="userSelect" onChange={this.handleSelect}>
-                                  <option value="0" hidden>Choose here</option>
+                                  <option value="0" hidden>Nenhum utilizador selecionado</option>
                                   {this.state.options}
                                 </Input>
                               </FormGroup>
