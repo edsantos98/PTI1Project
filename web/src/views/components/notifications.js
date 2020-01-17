@@ -62,7 +62,7 @@ export default class Notifications extends Component {
                     }
                         
                 }
-                if ((typeId === 2 || typeId === 6) && vehicle.sos === 0 && vehicle.speed > vehicle.speedLimit + 20 && (vehicle.status === 1 || (vehicle.typeId !== 5 && vehicle.typeId !== 6))) {
+                if ((typeId === 2 || typeId === 6) && vehicle.sos === 0 && vehicle.speed > vehicle.speedLimit + 20 && vehicle.status === 0) {
                     notify = true;
                     if (this.state.lastVehicles){
                         console.log("last vehicles");
