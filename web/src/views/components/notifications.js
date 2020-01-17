@@ -37,11 +37,11 @@ export default class Notifications extends Component {
                     notify = true;
                     if (this.state.lastVehicles){
                         console.log("last vehicles");
-                        this.state.lastVehicles.every(vehicle => {
-                            console.log(vehicle)
-                            if (vehicle.id === vehicle.id) {
-                                console.log(vehicle.id)
-                                if ((typeId === 2 && vehicle.sos > 0) || vehicle.sos === typeId) {
+                        this.state.lastVehicles.every(myVehicle => {
+                            console.log(myVehicle)
+                            if (vehicle.id === myVehicle.id) {
+                                console.log(myVehicle.id)
+                                if ((typeId === 2 && myVehicle.sos > 0) || myVehicle.sos === typeId) {
                                     console.log("notify false")
                                     notify = false;
                                     return false;
@@ -56,7 +56,7 @@ export default class Notifications extends Component {
                         show[index] = true;
                         return (
                             <Alert key={index} onClick={() => this.props.onClick(index)} isOpen={this.state.show[index]} toggle={()=> this.onDimiss(index)} fade={false} color="info" >
-                                <h5 >{'Utilizador ' + vehicle.name + ' (#' + vehicle.id + ') fez um pedido de SOS de ' + typeName[vehicle.sos] + '!'} </h5>
+                                <h5 >{'Utilizador ' + vehicle.name + '(#' + vehicle.id + ') fez um pedido de SOS de ' + typeName[vehicle.sos] + '!'} </h5>
                             </Alert>
                         );
                     }
@@ -108,7 +108,7 @@ export default class Notifications extends Component {
                         show[index] = true;
                         return (
                             <Alert key={index} isOpen={this.state.show[index]} toggle={()=> this.onDimiss(index)} fade={false} color="info" >
-                                <h5 >{typeName[vehicle.typeId] + ' (' + vehicle.name + ') a caminho!'} </h5>
+                                <h5 >{typeName[vehicle.typeId] + '(' + vehicle.name + ') a caminho!'} </h5>
                             </Alert>
                         );
                     }
