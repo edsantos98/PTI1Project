@@ -77,7 +77,7 @@ export default class DisplayRouteInfo extends Component {
                                         <span className="h2 font-weight-bold mb-0">
                                         {(routeInfo.distance/1000).toFixed(1)}
                                         </span>
-                                        <span className="h5 font-weight-bold text-muted mb-0"> Km/h</span>
+                                        <span className="h5 font-weight-bold text-muted mb-0"> km</span>
                                     </Col>
                                     <Col>
                                         <CardTitle
@@ -134,7 +134,7 @@ export default class DisplayRouteInfo extends Component {
                                         <span className="h2 font-weight-bold mb-0">
                                         {(routeInfo.distance/1000).toFixed(1)}
                                         </span>
-                                        <span className="h5 font-weight-bold text-muted mb-0"> Km/h</span>
+                                        <span className="h5 font-weight-bold text-muted mb-0"> km</span>
                                     </Col>
                                     <Col>
                                         <CardTitle
