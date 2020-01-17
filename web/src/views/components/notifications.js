@@ -56,7 +56,7 @@ export default class Notifications extends Component {
                         show[index] = true;
                         return (
                             <Alert key={index} onClick={() => this.props.onClick(index)} isOpen={this.state.show[index]} toggle={()=> this.onDimiss(index)} fade={false} color="info" >
-                                <h5 >{'Utilizador ' + vehicle.name + '(#' + vehicle.id + ') fez um pedido de SOS de ' + typeName[vehicle.sos] + '!'} </h5>
+                                <h5 >{'Utilizador ' + vehicle.name + ' (#' + vehicle.id + ') fez um pedido de SOS de ' + typeName[vehicle.sos] + '!'} </h5>
                             </Alert>
                         );
                     }
@@ -68,7 +68,7 @@ export default class Notifications extends Component {
                         console.log("last vehicles");
                         this.state.lastVehicles.every(myVehicle => {
                             if (vehicle.id === myVehicle.id) {
-                                if ((typeId === 2 || typeId === 6) && myVehicle.sos === 0 && myVehicle.speed > myVehicle.speedLimit + 20 && (myVehicle.status === 1 || (myVehicle.typeId !== 5 && vehicle.typeId !== 6))) {
+                                if ((typeId === 2 || typeId === 6) && myVehicle.sos === 0 && myVehicle.speed > myVehicle.speedLimit + 20 && myVehicle.status === 0) {
                                     console.log("notify false")
                                     notify = false;
                                     return false;
@@ -81,8 +81,8 @@ export default class Notifications extends Component {
                     if(notify) {
                         show[index] = true;
                         return (
-                            <Alert key={index} isOpen={this.state.show[index]} toggle={()=> this.onDimiss(index)} fade={false} color="info" >
-                                <h5 >{'Utilizador ' + vehicle.name + '(#' + vehicle.id + ') está a ultrapassar o limite de velocidade!'} </h5>
+                            <Alert key={index} onClick={() => this.props.onClick(index)} isOpen={this.state.show[index]} toggle={()=> this.onDimiss(index)} fade={false} color="info" >
+                                <h5 >{'Utilizador ' + vehicle.name + ' (#' + vehicle.id + ') está a ultrapassar o limite de velocidade!'} </h5>
                                 <h5 >{'Velocidade: ' + vehicle.speed + ' km/h, limite: ' + vehicle.speedLimit} </h5>
                             </Alert>
                         );
@@ -108,7 +108,7 @@ export default class Notifications extends Component {
                         show[index] = true;
                         return (
                             <Alert key={index} isOpen={this.state.show[index]} toggle={()=> this.onDimiss(index)} fade={false} color="info" >
-                                <h5 >{typeName[vehicle.typeId] + '(' + vehicle.name + ') a caminho!'} </h5>
+                                <h5 >{typeName[vehicle.typeId] + ' (' + vehicle.name + ') a caminho!'} </h5>
                             </Alert>
                         );
                     }
