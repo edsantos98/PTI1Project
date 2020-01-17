@@ -156,6 +156,8 @@ export default class DistanceRender extends React.Component {
                                 
                         }
                     });*/
+                }else if(status === window.google.maps.DirectionsStatus.OVER_QUERY_LIMIT){
+                    setTimeout(3000)
                 }else {
                 this.setState({ error: result });
                 }
