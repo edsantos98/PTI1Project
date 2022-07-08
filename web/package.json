@@ -48,7 +48,7 @@
     "chart.js": "2.8.0",
     "classnames": "2.2.6",
     "decode-google-map-polyline": "^1.0.1",
-    "moment": "2.24.0",
+    "moment": "2.29.4",
     "node-sass": "^4.13.1",
     "nouislider": "14.0.2",
     "react": "16.9.0",
